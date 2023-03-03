@@ -1,28 +1,48 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+
+const Navbar = ({user, setUser, pfp, setPfp}) => {
+    const navigate = useNavigate()
+    const localUser = localStorage.getItem("user")
+
+    useEffect(() => {
+        if(localUser){
+            setUser(localUser)
+            setPfp(JSON.parse(localStorage.getItem(localUser)).image)
+        }
+    }, [])
+    
+    const handleLogout = () => {
+        localStorage.removeItem("user")
+        localStorage.removeItem(user);
+        setPfp("")
+        setUser(null)
+        navigate("/")
+    }
+
   return (
-    <nav>
-            <Link to="/">
-                <h1>Home</h1>
-            </Link>
-            <Link to="/about">
-                <h1>About</h1>
-            </Link>
-            <Link to="/contact">
-                <h1>Contact</h1>
-            </Link> 
-            <Link to="/signup">
-                <h1>Signup</h1>
-            </Link> 
-            <Link to="/login">
-                <h1>Login</h1>
-            </Link> 
-            <Link to="/users">
-                <h1>Users</h1>
-            </Link> 
-    </nav>
+    <header id="header" className='header'>
+    <div className="container">
+            <div className="logo_part">
+                    <a href="/"><img src={pfp} alt="" /></a>
+            </div>
+
+        <nav>  
+            <ul className='navigation'>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/signup">Signup</Link></li>
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/users">Users</Link></li>
+            </ul>
+        </nav>
+
+        <div className="buttons">
+                <button onClick={handleLogout} className='Btn Btn--rounded Btn--danger'>Logout</button>
+        </div>
+    </div>       
+</header>
   )
 }
 

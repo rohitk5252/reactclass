@@ -1,31 +1,41 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
 const UserCard = () => {
 
-  const [data, setData] = useState([])
-  let { id } = useParams();
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/1/comments`)
+    fetch(`https://dummyjson.com/users`)
       .then(response => response.json())
       .then(json => {
-        setData(json)
+        console.log(json)
+        setUsers(json.users)
       })
-  }, [id]);
+  }, []);
 
-  
   return (
-    <div key={id} className='card'>
-        <div className='container'>
-            <div className='userid'>{id}</div>
-        <div className='content'>
-            <h4>{data.name}</h4 >
-            <h3>@{data.name}</h3>
-            <p>{data.email}</p>
-            {/* <p>{address}</p> */}
-        </div>
-        </div>
+    <section className="vh-100 user" style={{backgroundColor: "#fff"}}>
+  <div className="container py-5 h-100">
+    <div className="row d-flex justify-content-center align-items-center h-100">
+      {
+        users.map((user) => {
+          return (
+              <div className="col-3 card">
+                <div className="img_part">
+                  <img src={user.image} alt="" />
+                </div>
+                <div className="content">
+                  <h3>{user.firstName}</h3>
+                  <span>{user.age}</span>
+                  <span>{user.email}</span>
+                  <span>{user.phone}</span>
+                </div>
+              </div>
+          )
+        })
+      }
     </div>
+  </div>
+</section>
   )
 }
 

@@ -23,7 +23,7 @@ const Signup = () => {
         <input type="number" value={mobile} onChange={(e) => setMobile(e.target.value)}/>
         <label>Password : {arr[3]}</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        <button onClick={handleSubmit}>Signup</button>
+        <button className='Btn Btn--rounded Btn--success' onClick={handleSubmit}>Signup</button>
     </div>
   )
 }

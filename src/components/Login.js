@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Login = ({user, setUser}) => {
+const Login = ({user, setUser, setPfp}) => {
     const navigate = useNavigate()
     const [password, setPassword] = useState("0lelplR")
     const [userName, setUserName] = useState("kminchelle")
@@ -28,14 +28,13 @@ const Login = ({user, setUser}) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              
               username: userName,
               password:  password,
     })
   })
   const json = await response.json();
   console.log(json)
-  if(response.ok == false) {
+  if(!response.ok) {
     alert(json.message)
     return
   }
@@ -50,21 +49,25 @@ const Login = ({user, setUser}) => {
   }))
 
   setUser(userName)
+  setPfp(json.image)
   navigate("/")
 }
 
-
-    
   return (
-    <div className='form'>
-        <label htmlFor="">Name</label>
-        <input type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}}/>
-        <label>Password</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        <button onClick={handleLogin}>Login</button>
-
-        <div>Dont have an Account? <Link to="/signup"> Signup</Link></div>
-    </div>
+    <section className='login'>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 form">
+          <label htmlFor="">Name</label>
+          <input type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}}/>
+          <label>Password</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <button className='Btn Btn--rounded Btn--success' onClick={handleLogin}>Login</button>
+          <div>Dont have an Account? <Link to="/signup"> Signup</Link></div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
