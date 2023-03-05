@@ -19,7 +19,7 @@ const UserCard = () => {
       {
         users.map((user) => {
           return (
-              <div className="col-3 card">
+              <div className="col-3 card mx-2 my-2">
                 <div className="img_part">
                   <img src={user.image} alt="" />
                 </div>
